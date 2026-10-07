@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<title>小程序上线手续清单 · 云开发方案</title>
+<style>
+:root{
+  --ink:#243b35;--green:#315d4b;--paper:#f8f7f1;--muted:#6f776e;--line:#e3e5db;
+  --accent:#d2774f;--soft:#ebeee4;--white:#fffefa;--bg:#e9eae3;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.7 "Microsoft YaHei","PingFang SC",-apple-system,sans-serif}
+.wrap{max-width:940px;margin:0 auto;padding:40px 22px 90px}
+
+/* header */
+header{background:var(--white);border-radius:18px;padding:34px 36px 30px;
+  border:1px solid var(--line);position:relative;overflow:hidden}
+header::before{content:"";position:absolute;left:0;top:0;width:5px;height:100%;background:var(--green)}
+.eyebrow{font-size:11px;letter-spacing:3px;font-weight:700;color:var(--accent);text-transform:uppercase}
+h1{font:34px/1.3 Georgia,"Microsoft YaHei",serif;letter-spacing:-1px;margin:12px 0 14px}
+.lead{color:var(--muted);max-width:640px;margin:0}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.pill{background:var(--soft);color:#5d6b56;font-size:12px;padding:4px 11px;border-radius:999px}
+
+/* progress */
+.progress{display:flex;align-items:center;gap:16px;background:var(--white);
+  border:1px solid var(--line);border-radius:14px;padding:18px 24px;margin-top:18px}
+.bar{flex:1;height:9px;background:#e9eae3;border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;width:0;background:var(--green);
+  border-radius:99px;transition:width .35s ease}
+.pct{font-weight:700;font-size:15px;color:var(--green);min-width:96px;text-align:right}
+.pct small{display:block;font-size:11px;color:var(--muted);font-weight:400}
+
+/* section */
+section{margin-top:22px;background:var(--white);border:1px solid var(--line);
+  border-radius:16px;padding:26px 28px}
+.shead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  padding-bottom:14px;border-bottom:1px dashed var(--line);margin-bottom:6px}
+.sno{font:700 13px Georgia,serif;color:var(--white);background:var(--green);
+  width:26px;height:26px;border-radius:8px;display:grid;place-items:center;flex:none;align-self:center}
+h2{font-size:19px;margin:0;letter-spacing:-.3px}
+.tag{font-size:11px;padding:3px 9px;border-radius:6px;background:var(--soft);color:#5d6b56}
+.tag.hot{background:#faeee7;color:#a35a36}
+.note{color:var(--muted);font-size:13px;margin:12px 0 4px}
+
+/* items */
+ul.items{list-style:none;margin:8px 0 0;padding:0}
+ul.items li{display:flex;gap:12px;padding:11px 2px;border-bottom:1px solid #f1f2ea;align-items:flex-start}
+ul.items li:last-child{border-bottom:0}
+label.check{display:flex;gap:12px;cursor:pointer;flex:1;align-items:flex-start}
+input[type=checkbox]{appearance:none;width:20px;height:20px;flex:none;margin-top:2px;
+  border:2px solid #c3c8ba;border-radius:6px;background:#fff;cursor:pointer;position:relative;transition:.15s}
+input[type=checkbox]:checked{background:var(--green);border-color:var(--green)}
+input[type=checkbox]:checked::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;
+  border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+label.check span{font-size:15px}
+label.check small{display:block;color:var(--muted);font-size:12.5px;margin-top:1px}
+input:checked+span,label.check:has(input:checked) span:not(small){color:#9aa298}
+label.check:has(input:checked)>span{text-decoration:line-through;text-decoration-color:#c3c8ba}
+.badge{font-size:11px;padding:2px 8px;border-radius:999px;flex:none;align-self:center;white-space:nowrap}
+.b-who{background:#e8f0f7;color:#3a6b93}
+.b-cost{background:#f7ece2;color:#9a6b3c}
+.b-time{background:#e9f2e6;color:#4c7a41}
+
+/* callout */
+.callout{background:#fdf7f1;border:1px solid #f0dfd0;border-left:4px solid var(--accent);
+  border-radius:12px;padding:18px 22px;margin-top:22px}
+.callout h3{font-size:15px;margin:0 0 8px;color:var(--accent)}
+.callout p{margin:0 0 12px}
+.callout ol{margin:0;padding-left:20px}
+.callout li{margin-bottom:6px}
+
+/* table */
+.tbl{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+.tbl th,.tbl td{text-align:left;padding:10px 12px;border-bottom:1px solid #eef0e7}
+.tbl th{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.tbl td:last-child{color:var(--green);font-weight:700}
+.tbl tr td:nth-child(2){color:var(--muted)}
+
+/* footer */
+footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:32px;line-height:1.9}
+.btn{display:inline-block;background:var(--green);color:#fff;border:0;border-radius:10px;
+  padding:11px 22px;font:inherit;font-weight:700;cursor:pointer;margin-top:14px}
+.btn.ghost{background:#fff;color:var(--green);border:1.5px solid var(--green)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:26px}
+
+@media print{
+  body{background:#fff}
+  .actions,.progress{display:none}
+  .wrap{max-width:none;padding:0}
+  header,section{break-inside:avoid;box-shadow:none}
+  section{margin-top:12px}
+}
+@media(max-width:600px){
+  header{padding:26px 22px} h1{font-size:26px}
+  section{padding:20px 18px}
+  .badge{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">微信小程序 · 云开发方案</div>
+  <h1>上线手续清单</h1>
+  <p class="lead">用于上线一个支持「注册登录 + 微信支付」的小程序。采用微信云开发（CloudBase）托管后端，<strong>不需要自建服务器、不需要自己注册域名、不需要 ICP 备案</strong>。</p>
+  <div class="meta">
+    <span class="pill">主体：企业 / 个体工商户</span>
+    <span class="pill">后端：微信云开发</span>
+    <span class="pill">变现：微信支付</span>
+    <span class="pill">版本：2026.09</span>
+  </div>
+</header>
+
+<div class="progress">
+  <div class="bar"><i id="bar"></i></div>
+  <div class="pct"><span id="pct">0%</span><small><span id="cnt">0</span> / <span id="total">0</span> 项已完成</small></div>
+</div>
+
+<section>
+  <div class="shead"><span class="sno">1</span><h2>必备资质与材料</h2><span class="tag hot">硬门槛 · 只能由主体方提供</span></div>
+  <p class="note">缺少任意一项，后续都无法进行。个人主体不能开通微信支付，且不能升级为企业主体——必须一开始就走企业/个体户。</p>
+  <ul class="items">
+    <li><label class="check"><input type="checkbox"><span>营业执照（企业 或 个体工商户）<small>经营主体必备，个体户执照同样有效</small></span></label><span class="badge b-who">对方</span></li>
+    <li><label class="check"><input type="checkbox"><span>法人身份证正反面 + 实名手机号<small>注册与认证时使用</small></span></label><span class="badge b-who">对方</span></li>
+    <li><label class="check"><input type="checkbox"><span>对公银行账户<small>企业主体必需；个体工商户可结算至法人银行卡</small></span></label><span class="badge b-who">对方</span></li>
+    <li><label class="check"><input type="checkbox"><span>未注册过微信公众平台的邮箱<small>QQ / 163 邮箱均可，被占用过的会被拒</small></span></label><span class="badge b-who">对方</span></li>
+    <li><label class="check"><input type="checkbox"><span>法人本人微信号<small>用于人脸识别与扫码验证</small></span></label><span class="badge b-who">对方</span></li>
+  </ul>
+</section>
+
+<section>
+  <div class="shead"><span class="sno">2</span><h2>注册小程序与认证</h2><span class="tag">约 1–3 个工作日</span></div>
+  <ul class="items">
+    <li><label class="check"><input type="checkbox"><span>注册小程序账号（企业 / 个体户主体）<small>注册本身免费</small></span></label><span class="badge b-cost">免费</span></li>
+    <li><label class="check"><input type="checkbox"><span>完成微信认证<small>开通微信支付的前提；未认证无法申请支付权限；每年需年审</small></span></label><span class="badge b-cost">¥300 / 年</span></li>
+    <li><label class="check"><input type="checkbox"><span>开通云开发环境<small>公众平台 → 开发管理 → 云开发 → 新建环境</small></span></label><span class="badge b-cost">免费额度</span></li>
+    <li><label class="check"><input type="checkbox"><span>配置服务器域名白名单<small>填入腾讯云开发自带域名（已备案），无需自己购买域名</small></span></label><span class="badge b-time">免费配置</span></li>
+  </ul>
+</section>
+
+<section>
+  <div class="shead"><span class="sno">3</span><h2>申请微信支付商户号</h2><span class="tag hot">审核需等待，建议尽早启动</span></div>
+  <ul class="items">
+    <li><label class="check"><input type="checkbox"><span>提交商户号申请<small>营业执照 + 法人身份证 + 对公账户信息</small></span></label><span class="badge b-who">对方</span></li>
+    <li><label class="check"><input type="checkbox"><span>完成打款验证 / 法人扫码验证<small>审核通过后需验证主体真实性</small></span></label><span class="badge b-time">1–3 天</span></li>
+    <li><label class="check"><input type="checkbox"><span>在商户平台绑定小程序 AppID<small>未绑定会报「appid 与 mchid 不匹配」</small></span></label><span class="badge b-who">对方</span></li>
+    <li><label class="check"><input type="checkbox"><span>生成 APIv3 密钥并上传 API 证书到云开发<small>云开发已封装签名，只需上传一次</small></span></label><span class="badge b-who">对方 + 我方</span></li>
+    <li><label class="check"><input type="checkbox"><span>配置支付/退款回调到云函数<small>云开发模式下无需自建回调域名，微信直接推送到云函数</small></span></label><span class="badge b-who">我方</span></li>
+  </ul>
+</section>
+
+<section>
+  <div class="shead"><span class="sno">4</span><h2>类目与合规</h2><span class="tag hot">容易遗漏，可能被限权限</span></div>
+  <ul class="items">
+    <li><label class="check"><input type="checkbox"><span>选择服务类目：场地预约 / 生活服务<small>需确认该类目是否要求额外行业资质</small></span></label><span class="badge b-who">我方 + 对方</span></li>
+    <li><label class="check"><input type="checkbox"><span>如涉及餐饮、教育、医疗等，单独提供行业许可证<small>特殊类目没有专项许可会被驳回</small></span></label><span class="badge b-who">对方</span></li>
+    <li><label class="check"><input type="checkbox"><span>接入订单发货管理功能<small>交易类小程序规范要求；不接入可能被限制支付权限</small></span></label><span class="badge b-who">我方</span></li>
+    <li><label class="check"><input type="checkbox"><span>准备服务条款与隐私政策<small>小程序审核会检查用户协议、隐私政策入口</small></span></label><span class="badge b-who">我方 + 对方</span></li>
+  </ul>
+</section>
+
+<section>
+  <div class="shead"><span class="sno">5</span><h2>开发、测试与上线</h2><span class="tag">我方负责，需对方配合审核</span></div>
+  <ul class="items">
+    <li><label class="check"><input type="checkbox"><span>前端开发：小程序页面（可由现有原型改造）</span></label><span class="badge b-who">我方</span></li>
+    <li><label class="check"><input type="checkbox"><span>云函数开发：登录、下单、支付、回调、查单、退款</span></label><span class="badge b-who">我方</span></li>
+    <li><label class="check"><input type="checkbox"><span>云数据库设计：用户表、订单表、场地库存表</span></label><span class="badge b-who">我方</span></li>
+    <li><label class="check"><input type="checkbox"><span>测试：沙箱 + 一笔真实小额支付验证到账</span></label><span class="badge b-who">我方</span></li>
+    <li><label class="check"><input type="checkbox"><span>提交微信审核并发布上线<small>一般为 1–7 天</small></span></label><span class="badge b-time">1–7 天</span></li>
+  </ul>
+</section>
+
+<section>
+  <div class="shead"><span class="sno">✓</span><h2>走云开发省掉了什么</h2></div>
+  <table class="tbl">
+    <thead><tr><th>项目</th><th>常规自建后端</th><th>云开发方案</th></tr></thead>
+    <tbody>
+      <tr><td>自己注册域名</td><td>必须</td><td>不需要</td></tr>
+      <tr><td>ICP 备案（1–3 周）</td><td>必须</td><td>不需要</td></tr>
+      <tr><td>购买 / 租用服务器</td><td>需要</td><td>不需要（免运维）</td></tr>
+      <tr><td>支付回调域名与服务器</td><td>需自建</td><td>推送云函数，免配置</td></tr>
+      <tr><td>支付证书与签名实现</td><td>自行实现</td><td>平台已封装</td></tr>
+      <tr><td>小程序前端托管</td><td>由微信托管</td><td>由微信托管</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="callout">
+  <h3>三句话总结（可直接转达）</h3>
+  <ol>
+    <li><strong>必须有</strong>：营业执照、对公账户、微信认证（¥300/年）、微信支付商户号——云开发替代不了，这是收款的硬门槛。</li>
+    <li><strong>全部省掉</strong>：域名、备案、服务器、支付回调自建——云开发自带已备案域名并托管后端。</li>
+    <li><strong>要留出时间</strong>：认证、商户号审核、绑定 AppID 生效都需要等审核，<strong>建议第一天就并行去办</strong>。</li>
+  </ol>
+</div>
+
+<div class="actions">
+  <button class="btn" onclick="window.print()">打印 / 导出 PDF</button>
+  <button class="btn ghost" id="reset">清空所有勾选</button>
+</div>
+
+<footer>
+  本清单基于微信开放平台与微信支付商户文档（2026.09）整理，具体以官方最新要求为准。<br>
+  勾选状态仅保存在当前浏览器，未上传任何数据。
+</footer>
+
+</div>
+<script>
+var KEY='cike-onboarding-checks';
+var boxes=Array.prototype.slice.call(document.querySelectorAll('input[type=checkbox]'));
+function save(){
+  var v=boxes.map(function(b){return b.checked?1:0}).join('');
+  try{localStorage.setItem(KEY,v)}catch(e){}
+}
+function load(){
+  var v='';try{v=localStorage.getItem(KEY)||''}catch(e){}
+  boxes.forEach(function(b,i){b.checked=v[i]==='1'});
+}
+function upd(){
+  var n=boxes.filter(function(b){return b.checked}).length;
+  var p=boxes.length?Math.round(n/boxes.length*100):0;
+  document.getElementById('pct').textContent=p+'%';
+  document.getElementById('cnt').textContent=n;
+  document.getElementById('total').textContent=boxes.length;
+  document.getElementById('bar').style.width=p+'%';
+}
+boxes.forEach(function(b){b.addEventListener('change',function(){save();upd()})});
+document.getElementById('reset').addEventListener('click',function(){
+  boxes.forEach(function(b){b.checked=false});save();upd();
+});
+load();upd();
+</script>
+</body>
+</html>
